@@ -1,0 +1,13 @@
+{
+  "array" :
+  [
+    false,
+    null,
+    {
+      "singer" : "Michael Stipe",
+      "guitarist" : "Peter Buck",
+      "bassist" : "Mike Mills",
+      "drummer" : "Bill Berry"
+    }
+  ]
+}

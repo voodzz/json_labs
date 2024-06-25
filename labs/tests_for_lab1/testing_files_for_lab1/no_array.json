@@ -1,0 +1,8 @@
+{
+  "object" :
+  {
+    "string" : "music is awesome!",
+    "number" : 42,
+    "inner_array" : []
+  }
+}

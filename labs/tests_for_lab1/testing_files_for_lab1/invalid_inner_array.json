@@ -1,0 +1,23 @@
+{
+  "object" :
+  {
+    "string" : "music is awesome!",
+    "number" : 42,
+    "inner_array" :
+    [
+      false,
+      null
+    ] 
+  },
+  "array" :
+  [
+    false,
+    null,
+    {
+      "singer" : "Michael Stipe",
+      "guitarist" : "Peter Buck",
+      "bassist" : "Mike Mills",
+      "drummer" : "Bill Berry"
+    }
+  ]
+}
