@@ -1,0 +1,14 @@
+{
+    "date": "2024-06-26",
+    "orderId": 98765,
+    "shipping": {
+        "address": {
+            "city": "Anytown",
+            "state": "CA",
+            "street": "123 Main St",
+            "zip": "12345"
+        },
+        "cost": 7.99,
+        "method": "UPS"
+    }
+}

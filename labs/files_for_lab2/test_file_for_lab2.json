@@ -1,0 +1,41 @@
+{
+  "object" :
+  {
+    "string" : "music is awesome!",
+    "number" : 42,
+    "inner_array" :
+    [
+      false,
+      null,
+      true
+    ],
+    "another_array" : []
+  },
+  "another_object" :
+  {
+    "empty_array" : [],
+    "another_empty_array" : [],
+    "normal array" :
+    [
+      {},
+      {},
+      69,
+      81
+    ]
+  },
+  "array" :
+  [
+    false,
+    null,
+    {
+      "singer" : "Michael Stipe",
+      "guitarist" : "Peter Buck",
+      "bassist" : "Mike Mills",
+      "drummer" : "Bill Berry"
+    },
+    {
+      "city" : "New York",
+      "population" : "A lot"
+    }
+  ]
+}

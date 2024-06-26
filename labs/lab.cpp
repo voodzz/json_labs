@@ -136,8 +136,14 @@ void creatingAndWritingFile(nlohmann::json& json) {
                 nlohmann::json modifiedObject = item.value();
                 ModifyJsonObject(modifiedObject);
 
-                std::string filePath = "CMakeFiles/files_for_lab2/" + item.key() + ".json";
-                std::ofstream out(filePath, std::ios::out);
+                const std::string& filePath = R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab2\output)";
+                std::filesystem::path directory(filePath);
+                if (!exists(directory)) {
+                    std::filesystem::create_directory(directory);
+                }
+
+                std::string outputPath = directory.string() + R"(\)" + item.key() + ".json";
+                std::ofstream out(outputPath, std::ios::out);
                 out << modifiedObject.dump(4);
                 out.close();
             }
