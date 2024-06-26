@@ -1,24 +1,11 @@
 #include <gtest/gtest.h>
+#include "../readAndParse.h"
 #include "../lab01.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <json.hpp>
 
-nlohmann::json readAndParseFile(const std::string& filePath) {
-    std::ifstream fin(filePath, std::ios::in);
-    // fancy way I've found to read data inside a file
-    std::string file_content((std::istreambuf_iterator<char>(fin)), std::istreambuf_iterator<char>());
-    fin.close();
-    // create a json object and parse data from file into it
-    nlohmann::json json;
-    try {
-        json = nlohmann::json::parse(file_content);
-    } catch (nlohmann::json::parse_error& error) {
-        std::cout << "Parsing error: " << error.what() << std::endl;
-    }
-    return json;
-}
 
 TEST(Lab01_tests, invalid_array) {
     std::string filePath(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\tests_for_lab1\testing_files_for_lab1\invalid_array.json)");

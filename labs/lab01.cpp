@@ -7,13 +7,13 @@
 void CheckArgumentsAmount(int arguments_amount) {
     try {
         if (arguments_amount != 2) {
-            std::string errorMessage = "Invalid command line arguments amount:"
-                                       "current – " + std::to_string(arguments_amount) +
-                                       ", required – 2";
+            std::string errorMessage = "Invalid command line arguments amount: "
+                                       "current is " + std::to_string(arguments_amount) +
+                                       ", required is 2";
             throw std::invalid_argument(errorMessage);
         }
-    } catch (const char* error) {
-        std::cout << error << '\n';
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << '\n';
     }
 }
 
@@ -22,7 +22,7 @@ void CheckInputPath(const std::filesystem::path& path_to_filesystem_object) {
         if (!exists(path_to_filesystem_object)) {
             std::string errorMessage =
                     "Filesystem object by path " + path_to_filesystem_object.string()
-                    + " is not exists!";
+                    + " does not exist!";
             throw std::invalid_argument(errorMessage);
         }
         if (!is_regular_file(path_to_filesystem_object)) {
@@ -37,8 +37,8 @@ void CheckInputPath(const std::filesystem::path& path_to_filesystem_object) {
                     + " has invalid extension!";
             throw std::invalid_argument(errorMessage);
         }
-    } catch (const char* error) {
-        std::cout << error << '\n';
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << '\n';
     }
 }
 
