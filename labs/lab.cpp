@@ -3,6 +3,7 @@
 #include <json.hpp>
 #include <iostream>
 #include <vector>
+#include <time.h>
 #include "lab.h"
 #include "readAndParse.h"
 
@@ -144,4 +145,12 @@ void creatingAndWritingFile(nlohmann::json& json) {
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
     }
+}
+
+tm GetRequiredDateTime() {
+    time_t currentTime = time(NULL);
+    time_t neededTime = currentTime - 87*3600;
+    tm result{};
+    localtime_s(&result, &neededTime);
+    return result;
 }
