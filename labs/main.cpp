@@ -1,5 +1,5 @@
 #include <iostream>
-#include "lab01.h"
+#include "lab.h"
 #include "readAndParse.h"
 
 int main(int argc, char* argv[]) {
@@ -10,12 +10,6 @@ int main(int argc, char* argv[]) {
     CheckArgumentsAmount(argc);
     CheckInputPath(path);
     nlohmann::json json = readAndParseFile(path_str);
-    if (IsJsonCorrect(json)) {
-        std::string outputMessage = "Structure of JSON-file by path " + path_str + " is correct.";
-        std::cout << outputMessage << '\n';
-    } else {
-        std::string outputMessage = "Structure of JSON-file by path " + path_str + " is incorrect.";
-        std::cout << outputMessage << '\n';
-    }
+    creatingAndWritingFile(json);
     return 0;
 }

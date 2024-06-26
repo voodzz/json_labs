@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 #include "../readAndParse.h"
-#include "../lab01.h"
+#include "../lab.h"
 #include <filesystem>
 #include <fstream>
 #include <iostream>

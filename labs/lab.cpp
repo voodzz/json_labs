@@ -1,8 +1,10 @@
-#include "lab01.h"
 #include <string>
 #include <filesystem>
 #include <json.hpp>
 #include <iostream>
+#include <vector>
+#include "lab.h"
+#include "readAndParse.h"
 
 void CheckArgumentsAmount(int arguments_amount) {
     try {
@@ -96,4 +98,50 @@ bool IsJsonCorrect(const nlohmann::json& json) {
     }
 
     return true;
+}
+
+void ModifyJsonObject(nlohmann::json& json_object) {
+    try {
+        std::vector<std::string> keysToRemove;
+
+        for (auto it = json_object.begin(); it != json_object.end(); ++it) {
+            if (it.value().is_array()) {
+                const auto& array = it.value();
+                int counter = 0;
+                for (const auto& element: array) {
+                    if (element.is_object()) {
+                        ++counter;
+                    }
+                    if (counter >= 2) {
+                        keysToRemove.push_back(it.key());
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (const auto& key: keysToRemove) {
+            json_object.erase(key);
+        }
+    } catch (std::exception& e) {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void creatingAndWritingFile(nlohmann::json& json) {
+    try {
+        for (const auto& item: json.items()) {
+            if (item.value().is_object()) {
+                nlohmann::json modifiedObject = item.value();
+                ModifyJsonObject(modifiedObject);
+
+                std::string filePath = "CMakeFiles/files_for_lab2/" + item.key() + ".json";
+                std::ofstream out(filePath, std::ios::out);
+                out << modifiedObject.dump(4);
+                out.close();
+            }
+        }
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
 }
