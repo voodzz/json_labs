@@ -98,6 +98,8 @@ spdlog
 cmake-build-debug
 .idea/*
 *.txt
+!CMakeLists.txt
+!cmake-build-debug/CMakeFiles/files_for_lab2
 *.exe
 
 # Chutzpah Test files
