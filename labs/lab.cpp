@@ -3,7 +3,7 @@
 #include <json.hpp>
 #include <iostream>
 #include <vector>
-#include <time.h>
+#include <ctime>
 #include "lab.h"
 #include "readAndParse.h"
 
@@ -148,9 +148,46 @@ void creatingAndWritingFile(nlohmann::json& json) {
 }
 
 tm GetRequiredDateTime() {
-    time_t currentTime = time(NULL);
+    time_t currentTime = time(nullptr);
     time_t neededTime = currentTime - 87*3600;
     tm result{};
     localtime_s(&result, &neededTime);
     return result;
+}
+
+nlohmann::json TmToJson(tm date_time) {
+    nlohmann::json result({{"tm_sec", date_time.tm_sec}, {"tm_min", date_time.tm_min},
+                           {"tm_hour", date_time.tm_hour}, {"tm_mday", date_time.tm_mday},
+                           {"tm_mon", date_time.tm_mon}, {"tm_year", date_time.tm_year},
+                           {"tm_wday", date_time.tm_wday}, {"tm_yday", date_time.tm_yday},
+                           {"tm_isdst", date_time.tm_isdst}});
+    return result;
+}
+
+void CheckInputPathV2(const std::filesystem::path& path_to_filesystem_object) {
+    try {
+        if (path_to_filesystem_object.extension().string() != ".json") {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_filesystem_object.string()
+                    + " has invalid extension!";
+            throw std::invalid_argument(errorMessage);
+        }
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
+}
+
+void outputForLab3(const nlohmann::json& json, const std::string& filePath) {
+    std::cout << json.dump(4) << '\n';
+
+    std::filesystem::path path(filePath);
+    std::filesystem::path directory = path.parent_path();
+
+    if (!exists(directory)) {
+        std::filesystem::create_directory(directory);
+    }
+
+    std::ofstream out(filePath, std::ios::out);
+    out << json.dump(4) << '\n';
+    out.close();
 }

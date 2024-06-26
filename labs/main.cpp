@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 #include "lab.h"
 #include "readAndParse.h"
 
@@ -7,9 +8,11 @@ int main(int argc, char* argv[]) {
     std::filesystem::path path(path_str);
 
     std::cout << '\n';
+
     CheckArgumentsAmount(argc);
-    CheckInputPath(path);
-    nlohmann::json json = readAndParseFile(path_str);
-    creatingAndWritingFile(json);
+    CheckInputPathV2(path);
+    tm time = GetRequiredDateTime();
+    nlohmann::json json = TmToJson(time);
+    outputForLab3(json, path_str);
     return 0;
 }
