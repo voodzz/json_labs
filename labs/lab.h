@@ -28,19 +28,7 @@ void outputForLab4(const nlohmann::json& json);
 
 void CheckInputPathLab5(const std::filesystem::path& path_to_filesystem_object);
 namespace filesystem_object {
-    std::size_t Size (const std::filesystem::path& path_to_filesystem_object) {
-        if (is_directory(path_to_filesystem_object)) {
-            size_t totalSize = 0;
-            for (const auto& entry : std::filesystem::recursive_directory_iterator(path_to_filesystem_object)) {
-                if (!is_directory(entry.path())) {
-                    totalSize += file_size(entry.path());
-                }
-            }
-            return totalSize;
-        } else {
-            return file_size(path_to_filesystem_object);
-        }
-    }
+    std::size_t Size (const std::filesystem::path& path_to_filesystem_object);
 
     struct Info {
         std::string name; // name without extension
@@ -107,6 +95,8 @@ namespace filesystem_object {
             return os;
         }
     };
+
+    Info GetInfo (const std::filesystem::path& path_to_filesystem_object);
 }
 
 #endif //LABS_LAB_H

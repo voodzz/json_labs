@@ -310,3 +310,22 @@ void CheckInputPathLab5(const std::filesystem::path& path_to_filesystem_object) 
         std::cerr << error.what() << '\n';
     }
 }
+
+std::size_t filesystem_object::Size(const std::filesystem::path& path_to_filesystem_object) {
+    if (is_directory(path_to_filesystem_object)) {
+        size_t totalSize = 0;
+        for (const auto& entry : std::filesystem::recursive_directory_iterator(path_to_filesystem_object)) {
+            if (!is_directory(entry.path())) {
+                totalSize += file_size(entry.path());
+            }
+        }
+        return totalSize;
+    } else {
+        return file_size(path_to_filesystem_object);
+    }
+}
+
+filesystem_object::Info
+filesystem_object::GetInfo(const std::filesystem::path& path_to_filesystem_object) {
+    return filesystem_object::Info(path_to_filesystem_object);
+}
