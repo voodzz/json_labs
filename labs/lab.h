@@ -27,5 +27,36 @@ nlohmann::json GetFsObjectInfo (const std::filesystem::path& path_to_filesystem_
 void outputForLab4(const nlohmann::json& json);
 
 void CheckInputPathLab5(const std::filesystem::path& path_to_filesystem_object);
+namespace filesystem_object {
+    std::size_t Size (const std::filesystem::path& path_to_filesystem_object) {
+        if (is_directory(path_to_filesystem_object)) {
+            size_t totalSize = 0;
+            for (const auto& entry : std::filesystem::recursive_directory_iterator(path_to_filesystem_object)) {
+                if (!is_directory(entry.path())) {
+                    totalSize += file_size(entry.path());
+                }
+            }
+            return totalSize;
+        } else {
+            return file_size(path_to_filesystem_object);
+        }
+    }
+
+    struct Info {
+        std::string name; // name without extension
+        std::string type; // type (directory, file without extension, extention)
+        size_t size{};
+
+        explicit Info(const std::filesystem::path& path_to_filesystem_object) : name(path_to_filesystem_object.stem().string()) {
+            if (is_directory(path_to_filesystem_object)) {
+                type = "directory";
+            } else if (path_to_filesystem_object.has_extension()) {
+                type = path_to_filesystem_object.extension().string();
+            } else {
+                type = "file with no extension";
+            }
+        }
+    };
+}
 
 #endif //LABS_LAB_H
