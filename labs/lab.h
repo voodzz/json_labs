@@ -133,6 +133,55 @@ namespace directory_content {
                 std::cerr << error.what() << '\n';
             }
         }
+
+        Info(const Info& other) {
+            path_to_directory = other.path_to_directory;
+            size = other.size;
+            files_amount = other.files_amount;
+            directories_amount = other.directories_amount;
+        }
+        Info& operator =(const Info& other) {
+            if (this == &other) {
+                return *this;
+            }
+
+            path_to_directory = other.path_to_directory;
+            size = other.size;
+            files_amount = other.files_amount;
+            directories_amount = other.directories_amount;
+
+            return *this;
+        }
+
+        Info(Info&& other)  noexcept {
+            path_to_directory = other.path_to_directory;
+            size = other.size;
+            files_amount = other.files_amount;
+            directories_amount = other.directories_amount;
+        }
+        Info& operator =(Info&& other)  noexcept {
+            if (this != &other) {
+                path_to_directory = other.path_to_directory;
+                size = other.size;
+                files_amount = other.files_amount;
+                directories_amount = other.directories_amount;
+            }
+            return *this;
+        }
+
+        ~Info() = default;
+
+        friend std::ostream& operator <<(std::ostream& os, const Info& obj) {
+            os << std::left << std::setw(50) << std::setfill(' ') << "path_to_directory:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.path_to_directory
+               << std::left << std::setw(50) << std::setfill(' ') << "size:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.size
+               << std::left << std::setw(50) << std::setfill(' ') << "files_amount:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.files_amount
+               << std::left << std::setw(50) << std::setfill(' ') << "directories_amount:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.directories_amount;
+            return os;
+        }
     };
 }
 
