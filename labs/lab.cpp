@@ -20,7 +20,7 @@ void CheckArgumentsAmount(int arguments_amount) {
     }
 }
 
-void CheckInputPath(const std::filesystem::path& path_to_filesystem_object) {
+void CheckInputPathLabs1And2(const std::filesystem::path& path_to_filesystem_object) {
     try {
         if (!exists(path_to_filesystem_object)) {
             std::string errorMessage =
@@ -170,7 +170,7 @@ nlohmann::json TmToJson(tm date_time) {
     return result;
 }
 
-void CheckInputPathV2(const std::filesystem::path& path_to_filesystem_object) {
+void CheckInputPathLab3(const std::filesystem::path& path_to_filesystem_object) {
     try {
         if (path_to_filesystem_object.extension().string() != ".json") {
             std::string errorMessage =
@@ -196,4 +196,23 @@ void outputForLab3(const nlohmann::json& json, const std::string& filePath) {
     std::ofstream out(filePath, std::ios::out);
     out << json.dump(4) << '\n';
     out.close();
+}
+
+void CheckInputPathLab4(const std::filesystem::path& path_to_filesystem_object) {
+    try {
+        if (!exists(path_to_filesystem_object)) {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_filesystem_object.string()
+                    + " does not exist!";
+            throw std::invalid_argument(errorMessage);
+        }
+        if (!is_regular_file(path_to_filesystem_object) && !is_directory(path_to_filesystem_object)) {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_filesystem_object.string()
+                    + " has invalid type!";
+            throw std::invalid_argument(errorMessage);
+        }
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
 }
