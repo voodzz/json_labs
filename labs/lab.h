@@ -14,10 +14,10 @@ bool IsJsonCorrect(const nlohmann::json& json); // works for variant 1
 void ModifyJsonObject(nlohmann::json& json_object); // works for variant 8
 void outputForLab2(nlohmann::json& json);
 
+void CheckInputPathLab3(const std::filesystem::path& path_to_filesystem_object);
 tm GetRequiredDateTime(); // variant 2
 nlohmann::json TmToJson(tm date_time);
 void outputForLab3(const nlohmann::json& json, const std::string& filePath);
-void CheckInputPathLab3(const std::filesystem::path& path_to_filesystem_object);
 
 void CheckInputPathLab4(const std::filesystem::path& path_to_filesystem_object);
 std::size_t Size (const std::filesystem::path& path_to_filesystem_object);
@@ -48,6 +48,8 @@ namespace filesystem_object {
                 type = "file with no extension";
                 path_to_directory = path_to_filesystem_object.parent_path();
             }
+
+            size = Size(path_to_filesystem_object);
         }
 
         Info(const Info& other) {
@@ -172,19 +174,20 @@ namespace directory_content {
         ~Info() = default;
 
         friend std::ostream& operator <<(std::ostream& os, const Info& obj) {
-            os << std::left << std::setw(50) << std::setfill(' ') << "path_to_directory:"
-               << std::left << std::setw(20) << std::setfill(' ') << obj.path_to_directory
-               << std::left << std::setw(50) << std::setfill(' ') << "size:"
-               << std::left << std::setw(20) << std::setfill(' ') << obj.size
-               << std::left << std::setw(50) << std::setfill(' ') << "files_amount:"
-               << std::left << std::setw(20) << std::setfill(' ') << obj.files_amount
-               << std::left << std::setw(50) << std::setfill(' ') << "directories_amount:"
-               << std::left << std::setw(20) << std::setfill(' ') << obj.directories_amount;
+            os << std::left << std::setw(20) << std::setfill(' ') << "path_to_directory:"
+               << std::left << std::setw(50) << std::setfill(' ') << obj.path_to_directory
+               << std::left << std::setw(20) << std::setfill(' ') << "size:"
+               << std::left << std::setw(50) << std::setfill(' ') << obj.size
+               << std::left << std::setw(20) << std::setfill(' ') << "files_amount:"
+               << std::left << std::setw(50) << std::setfill(' ') << obj.files_amount
+               << std::left << std::setw(20) << std::setfill(' ') << "directories_amount:"
+               << std::left << std::setw(50) << std::setfill(' ') << obj.directories_amount;
             return os;
         }
     };
 
     Info GetInfo(const std::filesystem::path& path_to_directory);
 }
+void outputForLab5(const std::filesystem::path& path);
 
 #endif //LABS_LAB_H

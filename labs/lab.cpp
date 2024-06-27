@@ -311,6 +311,18 @@ void CheckInputPathLab5(const std::filesystem::path& path_to_filesystem_object) 
     }
 }
 
+void outputForLab5(const std::filesystem::path& path) {
+    directory_content::Info directory = directory_content::GetInfo(path);
+    std::cout << directory;
+    std::cout << '\n' << '\n';
+
+    for (const auto& entry : std::filesystem::directory_iterator(directory.path_to_directory)) {
+        filesystem_object::Info file = filesystem_object::GetInfo(entry.path());
+        std::cout << file;
+        std::cout << '\n';
+    }
+}
+
 std::size_t filesystem_object::Size(const std::filesystem::path& path_to_filesystem_object) {
     if (is_directory(path_to_filesystem_object)) {
         size_t totalSize = 0;

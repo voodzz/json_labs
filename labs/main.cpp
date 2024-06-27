@@ -10,8 +10,7 @@ int main(int argc, char* argv[]) {
     std::cout << '\n';
 
     CheckArgumentsAmount(argc);
-    CheckInputPathLab4(path);
-    nlohmann::json json = GetFsObjectInfo(path_str);
-    outputForLab4(json);
+    CheckInputPathLab5(path);
+    outputForLab5(path);
     return 0;
 }
