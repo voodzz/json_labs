@@ -291,3 +291,22 @@ void outputForLab4(const nlohmann::json& json) {
     out << json.dump(4) << '\n';
     out.close();
 }
+
+void CheckInputPathLab5(const std::filesystem::path& path_to_filesystem_object) {
+    try {
+        if (!exists(path_to_filesystem_object)) {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_filesystem_object.string()
+                    + " does not exist!";
+            throw std::invalid_argument(errorMessage);
+        }
+        if (!is_directory(path_to_filesystem_object)) {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_filesystem_object.string()
+                    + " is not a directory!";
+            throw std::invalid_argument(errorMessage);
+        }
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
+}

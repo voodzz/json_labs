@@ -26,4 +26,6 @@ nlohmann::json GetDirectoryInfo (const std::filesystem::path& path_to_directory)
 nlohmann::json GetFsObjectInfo (const std::filesystem::path& path_to_filesystem_object);
 void outputForLab4(const nlohmann::json& json);
 
+void CheckInputPathLab5(const std::filesystem::path& path_to_filesystem_object);
+
 #endif //LABS_LAB_H
