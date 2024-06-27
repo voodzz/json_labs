@@ -16,17 +16,17 @@ FetchContent_MakeAvailable(googletest)
 add_executable(labs
         lab.cpp
         lab.h
-        main.cpp
+        #main.cpp
         readAndParse.cpp
         readAndParse.h
         FilesStorage.h
         FilesStorage.cpp
-        #tests_for_lab1/test.cc
+        tests_for_labs/test.cc
 )
 
 include_directories(../../../side_libraries/nlohmann)
 
-#target_link_libraries(
-#        labs
-#        GTest::gtest_main
-#)
+target_link_libraries(
+        labs
+        GTest::gtest_main
+)
