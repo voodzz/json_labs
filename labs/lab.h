@@ -200,5 +200,6 @@ std::size_t GetFileContentHash (const std::filesystem::path& path_to_file);
 void RemoveDuplicatesFromDirectory (const std::filesystem::path& path_to_directory);
 
 std::filesystem::path GetPathToMove (const std::filesystem::path& path_to_file);
+void Move(const std::filesystem::path& path_to_file);
 
 #endif //LABS_LAB_H

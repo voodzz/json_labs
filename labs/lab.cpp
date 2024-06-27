@@ -382,8 +382,8 @@ std::string ReadFileContent(const std::filesystem::path& path_to_file) {
         }
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
+        return {};
     }
-    return {};
 }
 
 std::set<std::string> GetFilesContentFromDirectory(const std::filesystem::path& path_to_directory) {
@@ -397,8 +397,8 @@ std::set<std::string> GetFilesContentFromDirectory(const std::filesystem::path& 
         return result;
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
+        return {};
     }
-    return {};
 }
 
 std::size_t GetFileContentHash(const std::filesystem::path& path_to_file) {
@@ -507,8 +507,27 @@ std::filesystem::path GetPathToMove(const std::filesystem::path& path_to_file) {
 
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
+        return {};
     }
-    return {};
+}
+
+void Move(const std::filesystem::path& path_to_file) {
+    std::filesystem::path destination = GetPathToMove(path_to_file);
+    std::filesystem::path dayDirectory = destination.parent_path();
+    std::filesystem::path monthDirectory = dayDirectory.parent_path();
+    std::filesystem::path yearDirectory = monthDirectory.parent_path();
+
+    if (!exists(yearDirectory)) {
+        std::filesystem::create_directory(yearDirectory);
+    }
+    if (!exists(monthDirectory)) {
+        std::filesystem::create_directory(monthDirectory);
+    }
+    if (!exists(dayDirectory)) {
+        std::filesystem::create_directory(dayDirectory);
+    }
+
+    std::filesystem::rename(path_to_file, destination);
 }
 
 std::size_t filesystem_object::Size(const std::filesystem::path& path_to_filesystem_object) {

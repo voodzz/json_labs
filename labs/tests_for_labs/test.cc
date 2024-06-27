@@ -74,36 +74,36 @@ TEST(GetPathToMoveTests, leapYear) {
 }
 
 TEST(GetPathToMoveTests, wrongYear) {
-    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\0000_02_21_wrongYear.txt)");
+    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\for_tests\0000_02_21_wrongYear.txt)");
     EXPECT_ANY_THROW(GetPathToMove(path));
 }
 
 TEST(GetPathToMoveTests, wrongYearAndDay) {
-    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\10_02_42_wrongYearAndDay.txt)");
+    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\for_tests\10_02_42_wrongYearAndDay.txt)");
     EXPECT_ANY_THROW(GetPathToMove(path));
 }
 
 TEST(GetPathToMoveTests, wrongYearAndMonth) {
-    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\10_02_42_wrongYearAndMonth.txt)");
+    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\for_tests\19_13_01_wrongYearAndMonth.txt)");
     EXPECT_ANY_THROW(GetPathToMove(path));
 }
 
 TEST(GetPathToMoveTests, wrongDay) {
-    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\10_02_42_wrongDay.txt)");
+    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\for_tests\2024_07_69_wrongDay.txt)");
     EXPECT_ANY_THROW(GetPathToMove(path));
 }
 
 TEST(GetPathToMoveTests, wrongMonth) {
-    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\10_02_42_wrongMonth.txt)");
+    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\for_tests\2024_31_12_wrongMonth.txt)");
     EXPECT_ANY_THROW(GetPathToMove(path));
 }
 
 TEST(GetPathToMoveTests, wrongMonthAndDay) {
-    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\10_02_42_wrongMonthAndDay.txt)");
+    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\for_tests\2024_32_32_wrongMonthAndDay.txt)");
     EXPECT_ANY_THROW(GetPathToMove(path));
 }
 
 TEST(GetPathToMoveTests, everythingIsWrong) {
-    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\-0002_15_32_everythingIsWrong.txt)");
+    std::filesystem::path path(R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab9\for_tests\0000_15_32_everythingIsWrong.txt)");
     EXPECT_ANY_THROW(GetPathToMove(path));
 }
