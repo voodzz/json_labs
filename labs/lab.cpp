@@ -129,14 +129,14 @@ void ModifyJsonObject(nlohmann::json& json_object) {
     }
 }
 
-void creatingAndWritingFile(nlohmann::json& json) {
+void outputForLab2(nlohmann::json& json) {
     try {
         for (const auto& item: json.items()) {
             if (item.value().is_object()) {
                 nlohmann::json modifiedObject = item.value();
                 ModifyJsonObject(modifiedObject);
 
-                const std::string& filePath = R"(C:\Task_Bar\Two\Studying\summer_prac\json_labs\labs\files_for_lab2\output)";
+                const std::string& filePath = std::filesystem::current_path().parent_path().string() + "/files_for_lab2/output";
                 std::filesystem::path directory(filePath);
                 if (!exists(directory)) {
                     std::filesystem::create_directory(directory);
@@ -279,3 +279,15 @@ nlohmann::json GetFsObjectInfo(const std::filesystem::path& path_to_filesystem_o
     return result;
 }
 
+void outputForLab4(const nlohmann::json& json) {
+    std::cout << json.dump(4) << '\n';
+
+    std::filesystem::path outputFile = std::filesystem::current_path().parent_path().string() + "/output_lab4/fs_object_info.json";
+    if (!exists(outputFile.parent_path())) {
+        std::filesystem::create_directory(outputFile.parent_path());
+    }
+
+    std::ofstream out(outputFile, std::ios::out);
+    out << json.dump(4) << '\n';
+    out.close();
+}

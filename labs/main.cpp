@@ -10,9 +10,8 @@ int main(int argc, char* argv[]) {
     std::cout << '\n';
 
     CheckArgumentsAmount(argc);
-    CheckInputPathLab3(path);
-    tm time = GetRequiredDateTime();
-    nlohmann::json json = TmToJson(time);
-    outputForLab3(json, path_str);
+    CheckInputPathLab4(path);
+    nlohmann::json json = GetFsObjectInfo(path_str);
+    outputForLab4(json);
     return 0;
 }
