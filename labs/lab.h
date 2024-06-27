@@ -46,15 +46,65 @@ namespace filesystem_object {
         std::string name; // name without extension
         std::string type; // type (directory, file without extension, extention)
         size_t size{};
+        std::filesystem::path path_to_directory;
 
-        explicit Info(const std::filesystem::path& path_to_filesystem_object) : name(path_to_filesystem_object.stem().string()) {
+        Info() = delete;
+        explicit Info(const std::filesystem::path& path_to_filesystem_object) : name(path_to_filesystem_object.filename().string()) {
             if (is_directory(path_to_filesystem_object)) {
                 type = "directory";
+                path_to_directory = path_to_filesystem_object;
             } else if (path_to_filesystem_object.has_extension()) {
                 type = path_to_filesystem_object.extension().string();
+                path_to_directory = path_to_filesystem_object.parent_path();
             } else {
                 type = "file with no extension";
+                path_to_directory = path_to_filesystem_object.parent_path();
             }
+        }
+
+        Info(const Info& other) {
+            name = other.name;
+            type = other.type;
+            size = other.size;
+            path_to_directory = other.path_to_directory;
+        }
+        Info& operator =(const Info& other) {
+            if (this == &other) {
+                return *this;
+            }
+
+            name = other.name;
+            type = other.type;
+            size = other.size;
+            path_to_directory = other.path_to_directory;
+
+            return *this;
+        }
+
+        Info(Info&& other)  noexcept {
+            name = other.name;
+            type = other.type;
+            size = other.size;
+            path_to_directory = other.path_to_directory;
+        }
+        Info& operator =(Info&& other)  noexcept {
+            if (this != &other) {
+                name = other.name;
+                type = other.type;
+                size = other.size;
+                path_to_directory = other.path_to_directory;
+            }
+            return *this;
+        }
+
+        ~Info() = default;
+
+        friend std::ostream& operator<<(std::ostream& os, const Info& obj) {
+            os << std::left << std::setw(20) << std::setfill(' ') << obj.name
+               << std::left << std::setw(20) << std::setfill(' ') << obj.type
+               << std::left << std::setw(20) << std::setfill(' ') << obj.size
+               << std::left << std::setw(50) << std::setfill(' ') << obj.path_to_directory;
+            return os;
         }
     };
 }
