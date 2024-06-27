@@ -19,6 +19,8 @@ add_executable(labs
         main.cpp
         readAndParse.cpp
         readAndParse.h
+        FilesStorage.h
+        FilesStorage.cpp
         #tests_for_lab1/test.cc
 )
 

@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
 
         std::cout << '\n';
 
-        CheckArgumentsAmountLab6(argc);
+        CheckArgumentsAmountLab6And7(argc);
         CheckDirectoryPath(source);
         CheckDirectoryPath(destination);
         std::set<std::string> content = GetFilesContentFromDirectory(destination);

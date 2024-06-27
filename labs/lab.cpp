@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <ctime>
+#include <set>
 #include "lab.h"
 #include "readAndParse.h"
 
@@ -321,7 +322,7 @@ void outputForLab5(const std::filesystem::path& path) {
     }
 }
 
-void CheckArgumentsAmountLab6(int arguments_amount) {
+void CheckArgumentsAmountLab6And7(int arguments_amount) {
     try {
         if (arguments_amount != 3) {
             std::string errorMessage = "Invalid command line arguments amount: "

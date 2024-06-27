@@ -191,9 +191,11 @@ namespace directory_content {
 }
 void outputForLab5(const std::filesystem::path& path);
 
-void CheckArgumentsAmountLab6(int arguments_amount);
+void CheckArgumentsAmountLab6And7(int arguments_amount);
 void CheckDirectoryPath (const std::filesystem::path& path_to_directory);
 std::string ReadFileContent (const std::filesystem::path& path_to_file);
 std::set<std::string> GetFilesContentFromDirectory (const std::filesystem::path& path_to_directory);
+
+
 
 #endif //LABS_LAB_H
