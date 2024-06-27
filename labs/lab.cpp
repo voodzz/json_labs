@@ -15,8 +15,8 @@ void CheckArgumentsAmount(int arguments_amount) {
                                        ", required is 2";
             throw std::invalid_argument(errorMessage);
         }
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << '\n';
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
     }
 }
 
@@ -40,8 +40,8 @@ void CheckInputPathLabs1And2(const std::filesystem::path& path_to_filesystem_obj
                     + " has invalid extension!";
             throw std::invalid_argument(errorMessage);
         }
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << '\n';
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
     }
 }
 
@@ -124,8 +124,8 @@ void ModifyJsonObject(nlohmann::json& json_object) {
         for (const auto& key: keysToRemove) {
             json_object.erase(key);
         }
-    } catch (std::exception& e) {
-        std::cerr << e.what() << '\n';
+    } catch (std::exception& error) {
+        std::cerr << error.what() << '\n';
     }
 }
 
@@ -229,4 +229,11 @@ std::size_t Size(const std::filesystem::path& path_to_filesystem_object) {
     } else {
         return file_size(path_to_filesystem_object);
     }
+}
+
+nlohmann::json GetRegularFileInfo(const std::filesystem::path& path_to_file) {
+    nlohmann::json file({{"type", "regular_file"}, {"full_name", path_to_file.filename()},
+                         {"name_without_extension", path_to_file.stem()}, {"extension", path_to_file.extension()},
+                         {"size", Size(path_to_file)}});
+    return file;
 }
