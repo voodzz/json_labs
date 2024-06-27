@@ -190,4 +190,7 @@ namespace directory_content {
 }
 void outputForLab5(const std::filesystem::path& path);
 
+void CheckDirectoryPath (const std::filesystem::path& path_to_directory);
+std::string ReadFileContent (const std::filesystem::path& path_to_file);
+
 #endif //LABS_LAB_H

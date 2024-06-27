@@ -27,14 +27,12 @@ void CheckInputPathLabs1And2(const std::filesystem::path& path_to_filesystem_obj
                     "Filesystem object by path " + path_to_filesystem_object.string()
                     + " does not exist!";
             throw std::invalid_argument(errorMessage);
-        }
-        if (!is_regular_file(path_to_filesystem_object)) {
+        } else if (!is_regular_file(path_to_filesystem_object)) {
             std::string errorMessage =
                     "Filesystem object by path " + path_to_filesystem_object.string()
                     + " is not a regular file!";
             throw std::invalid_argument(errorMessage);
-        }
-        if (path_to_filesystem_object.extension().string() != ".json") {
+        } else if (path_to_filesystem_object.extension().string() != ".json") {
             std::string errorMessage =
                     "Filesystem object by path " + path_to_filesystem_object.string()
                     + " has invalid extension!";
@@ -320,6 +318,55 @@ void outputForLab5(const std::filesystem::path& path) {
         filesystem_object::Info file = filesystem_object::GetInfo(entry.path());
         std::cout << file;
         std::cout << '\n';
+    }
+}
+
+void CheckDirectoryPath(const std::filesystem::path& path_to_directory) {
+    try {
+        if (!exists(path_to_directory)) {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_directory.string()
+                    + " does not exist!";
+            throw std::runtime_error(errorMessage);
+        } else if (!is_directory(path_to_directory)) {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_directory.string()
+                    + " is not a directory!";
+            throw std::runtime_error(errorMessage);
+        }
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
+}
+
+std::string ReadFileContent(const std::filesystem::path& path_to_file) {
+    try {
+        if (!exists(path_to_file)) {
+            std::string errorMessage =
+                    "Filesystem object by path " + path_to_file.string()
+                    + " does not exist!";
+            throw std::invalid_argument(errorMessage);
+        } else {
+            std::ifstream file(path_to_file, std::ios::in);
+            if (!file.is_open()) {
+                std::string errorMessage =
+                        "File by path " + path_to_file.string()
+                        + " hasn’t been opened!";
+                throw std::invalid_argument(errorMessage);
+            } else {
+                //finding the lengths of a file
+                file.seekg(0, std::ios::end);
+                size_t length = file.tellg();
+                file.seekg(0, std::ios::beg);
+
+                std::string result(length, '\0');
+                file.read(result.data(), static_cast<std::streamsize>(result.length()));
+                file.close();
+                return result;
+            }
+        }
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
     }
 }
 
