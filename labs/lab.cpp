@@ -5,6 +5,7 @@
 #include <vector>
 #include <ctime>
 #include <set>
+#include <regex>
 #include "lab.h"
 #include "readAndParse.h"
 
@@ -421,6 +422,93 @@ void RemoveDuplicatesFromDirectory(const std::filesystem::path& path_to_director
             }
         }
     }
+}
+
+std::filesystem::path GetPathToMove(const std::filesystem::path& path_to_file) {
+    try {
+        std::string year;
+        std::string month;
+        std::string day;
+        std::string fileName = path_to_file.filename().string();
+        std::string nameWithExtension;
+
+        // год_месяц_число_имя.расширение, (например, 2022_08_13_filename.pdf)
+        std::regex pattern(R"(^(\d{4})_(\d{2})_(\d{2})_(.+))");
+        std::smatch matches;
+        if (std::regex_match(fileName, matches, pattern)) {
+            if (matches.size() == 5) {
+                year = matches[1].str();
+                month = matches[2].str();
+                day = matches[3].str();
+                nameWithExtension = matches[4].str();
+                int yearNumber = std::stoi(year);
+                int monthNumber = std::stoi(month);
+                int dayNumber = std::stoi(day);
+
+                // Check if the year is legit
+                if (yearNumber < 1) {
+                    throw std::invalid_argument(
+                            "Invalid filename. File path: " + path_to_file.string());
+                } else {
+                    switch (monthNumber) {
+                        case 1:
+                        case 3:
+                        case 5:
+                        case 7:
+                        case 8:
+                        case 10:
+                        case 12:
+                            if (dayNumber < 1 || dayNumber > 31) {
+                                throw std::invalid_argument(
+                                        "Invalid filename. File path: " + path_to_file.string());
+                            }
+                            break;
+                        case 4:
+                        case 6:
+                        case 9:
+                        case 11:
+                            if (dayNumber < 1 || dayNumber > 30) {
+                                throw std::invalid_argument(
+                                        "Invalid filename. File path: " + path_to_file.string());
+                            }
+                            break;
+                        case 2: {
+                            // if the year is leap
+                            if (yearNumber % 400 == 0 || (yearNumber % 4 == 0 && yearNumber % 100 != 0)) {
+                                if (dayNumber < 1 || dayNumber > 29) {
+                                    throw std::invalid_argument(
+                                            "Invalid filename. File path: " + path_to_file.string());
+                                }
+                            } else {
+                                if (dayNumber < 1 || dayNumber > 28) {
+                                    throw std::invalid_argument(
+                                            "Invalid filename. File path: " + path_to_file.string());
+                                }
+                            }
+                            break;
+                        }
+                        default:
+                            throw std::invalid_argument(
+                                    "Invalid filename. File path: " + path_to_file.string());
+                            break;
+                    }
+                }
+            } else {
+                throw std::invalid_argument(
+                        "Invalid filename. File path: " + path_to_file.string());
+            }
+        } else {
+            throw std::invalid_argument("Invalid filename. File path: " + path_to_file.string());
+        }
+        std::filesystem::path newPath = path_to_file.parent_path();
+        newPath.append(year).append(month).append(day).append(nameWithExtension);
+
+        return newPath;
+
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
+    return {};
 }
 
 std::size_t filesystem_object::Size(const std::filesystem::path& path_to_filesystem_object) {
