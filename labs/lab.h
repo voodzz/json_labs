@@ -196,6 +196,7 @@ void CheckDirectoryPath (const std::filesystem::path& path_to_directory);
 std::string ReadFileContent (const std::filesystem::path& path_to_file);
 std::set<std::string> GetFilesContentFromDirectory (const std::filesystem::path& path_to_directory);
 
-
+std::size_t GetFileContentHash (const std::filesystem::path& path_to_file);
+void RemoveDuplicatesFromDirectory (const std::filesystem::path& path_to_directory);
 
 #endif //LABS_LAB_H

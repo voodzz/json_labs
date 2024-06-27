@@ -400,6 +400,28 @@ std::set<std::string> GetFilesContentFromDirectory(const std::filesystem::path& 
     return {};
 }
 
+std::size_t GetFileContentHash(const std::filesystem::path& path_to_file) {
+    std::string fileContent = ReadFileContent(path_to_file);
+    std::hash<std::string> hasher;
+    return hasher(fileContent);
+}
+
+void RemoveDuplicatesFromDirectory(const std::filesystem::path& path_to_directory) {
+    std::set<size_t> hashes;
+    for (const auto& entry : std::filesystem::directory_iterator(path_to_directory)) {
+        if (is_regular_file(entry.path())) {
+            size_t fileHash = GetFileContentHash(entry.path());
+            auto check = hashes.find(fileHash);
+            if (check != hashes.end()) {
+                std::filesystem::remove(entry.path());
+                std::string message = "File by path " + entry.path().string() + " has been removed.";
+            } else {
+                hashes.insert(fileHash);
+            }
+        }
+    }
+}
+
 std::size_t filesystem_object::Size(const std::filesystem::path& path_to_filesystem_object) {
     if (is_directory(path_to_filesystem_object)) {
         size_t totalSize = 0;
