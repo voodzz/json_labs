@@ -20,5 +20,6 @@ void CheckInputPathLab3(const std::filesystem::path& path_to_filesystem_object);
 void CheckInputPathLab4(const std::filesystem::path& path_to_filesystem_object);
 std::size_t Size (const std::filesystem::path& path_to_filesystem_object);
 nlohmann::json GetRegularFileInfo (const std::filesystem::path& path_to_file);
+nlohmann::json GetDirectoryInfo (const std::filesystem::path& path_to_directory);
 
 #endif //LABS_LAB_H

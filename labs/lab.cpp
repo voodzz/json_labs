@@ -162,11 +162,17 @@ tm GetRequiredDateTime() {
 }
 
 nlohmann::json TmToJson(tm date_time) {
-    nlohmann::json result({{"tm_sec", date_time.tm_sec}, {"tm_min", date_time.tm_min},
-                           {"tm_hour", date_time.tm_hour}, {"tm_mday", date_time.tm_mday},
-                           {"tm_mon", date_time.tm_mon}, {"tm_year", date_time.tm_year},
-                           {"tm_wday", date_time.tm_wday}, {"tm_yday", date_time.tm_yday},
-                           {"tm_isdst", date_time.tm_isdst}});
+    nlohmann::json result ={
+            {"tm_sec", date_time.tm_sec},
+            {"tm_min", date_time.tm_min},
+            {"tm_hour", date_time.tm_hour},
+            {"tm_mday", date_time.tm_mday},
+            {"tm_mon", date_time.tm_mon},
+            {"tm_year", date_time.tm_year},
+            {"tm_wday", date_time.tm_wday},
+            {"tm_yday", date_time.tm_yday},
+            {"tm_isdst", date_time.tm_isdst}
+    };
     return result;
 }
 
@@ -232,8 +238,34 @@ std::size_t Size(const std::filesystem::path& path_to_filesystem_object) {
 }
 
 nlohmann::json GetRegularFileInfo(const std::filesystem::path& path_to_file) {
-    nlohmann::json file({{"type", "regular_file"}, {"full_name", path_to_file.filename()},
-                         {"name_without_extension", path_to_file.stem()}, {"extension", path_to_file.extension()},
-                         {"size", Size(path_to_file)}});
+    nlohmann::json file = {
+            {"type",                   "regular_file"},
+            {"full_name",              path_to_file.filename()},
+            {"name_without_extension", path_to_file.stem()},
+            {"extension",              path_to_file.extension()},
+            {"size",                   Size(path_to_file)}
+    };
     return file;
 }
+
+nlohmann::json GetDirectoryInfo(const std::filesystem::path& path_to_directory) {
+    int32_t filesAmount = 0;
+    int32_t directoriesAmount = 0;
+    for (const auto& entry: std::filesystem::directory_iterator(path_to_directory)) {
+        if (is_regular_file(entry.path())) {
+            ++filesAmount;
+        } else if (is_directory(entry.path())) {
+            ++directoriesAmount;
+        }
+    }
+
+    nlohmann::json directory = {
+            {"type",               "directory"},
+            {"name",               path_to_directory.stem()},
+            {"size",               Size(path_to_directory)},
+            {"files_amount",       filesAmount},
+            {"directories_amount", directoriesAmount}
+    };
+    return directory;
+}
+
