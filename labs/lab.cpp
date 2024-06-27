@@ -329,3 +329,7 @@ filesystem_object::Info
 filesystem_object::GetInfo(const std::filesystem::path& path_to_filesystem_object) {
     return filesystem_object::Info(path_to_filesystem_object);
 }
+
+directory_content::Info directory_content::GetInfo(const std::filesystem::path& path_to_directory) {
+    return directory_content::Info(path_to_directory);
+}

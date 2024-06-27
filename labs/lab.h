@@ -183,6 +183,8 @@ namespace directory_content {
             return os;
         }
     };
+
+    Info GetInfo(const std::filesystem::path& path_to_directory);
 }
 
 #endif //LABS_LAB_H
