@@ -269,3 +269,13 @@ nlohmann::json GetDirectoryInfo(const std::filesystem::path& path_to_directory) 
     return directory;
 }
 
+nlohmann::json GetFsObjectInfo(const std::filesystem::path& path_to_filesystem_object) {
+    nlohmann::json result;
+    if (is_directory(path_to_filesystem_object)) {
+        result = GetDirectoryInfo(path_to_filesystem_object);
+    } else if (is_regular_file(path_to_filesystem_object)) {
+        result = GetRegularFileInfo(path_to_filesystem_object);
+    }
+    return result;
+}
+
