@@ -415,6 +415,7 @@ void RemoveDuplicatesFromDirectory(const std::filesystem::path& path_to_director
             if (check != hashes.end()) {
                 std::filesystem::remove(entry.path());
                 std::string message = "File by path " + entry.path().string() + " has been removed.";
+                std::cout << message << '\n';
             } else {
                 hashes.insert(fileHash);
             }
