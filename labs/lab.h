@@ -33,8 +33,8 @@ namespace filesystem_object {
     struct Info {
         std::string name; // name without extension
         std::string type; // type (directory, file without extension, extention)
-        size_t size{};
-        std::filesystem::path path_to_directory;
+        size_t size{}; // literally just size of the object
+        std::filesystem::path path_to_directory; // literally path to directory
 
         Info() = delete;
         explicit Info(const std::filesystem::path& path_to_filesystem_object) : name(path_to_filesystem_object.filename().string()) {
@@ -97,6 +97,43 @@ namespace filesystem_object {
     };
 
     Info GetInfo (const std::filesystem::path& path_to_filesystem_object);
+}
+namespace directory_content {
+    struct Info {
+        std::filesystem::path path_to_directory; // path to directory
+        size_t size{}; // literally just size of the object
+        uint32_t files_amount{}; // the number of files in the directory at the first nesting level
+        uint32_t directories_amount{}; // the number of nested directories at the first nesting level
+
+        Info() = delete;
+        explicit Info(const std::filesystem::path& path_to_filesystem_object) {
+            try {
+                if (!is_directory(path_to_filesystem_object)) {
+                    std::string errorMessage =
+                            "Filesystem object by path " + path_to_filesystem_object.string()
+                            + " is not a directory!";
+                    throw std::invalid_argument(errorMessage);
+                } else {
+                    path_to_directory = path_to_filesystem_object;
+
+                    // Initializing size using filesystem_object::Size function
+                    size = filesystem_object::Size(path_to_filesystem_object);
+
+                    // Counting the number of files and directories in the directory at the first nesting level
+                    for (const auto& entry: std::filesystem::directory_iterator(
+                            path_to_filesystem_object)) {
+                        if (is_regular_file(entry.path())) {
+                            ++files_amount;
+                        } else if (is_directory(entry.path())) {
+                            ++directories_amount;
+                        }
+                    }
+                }
+            } catch (const std::exception& error) {
+                std::cerr << error.what() << '\n';
+            }
+        }
+    };
 }
 
 #endif //LABS_LAB_H
