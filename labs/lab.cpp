@@ -321,6 +321,19 @@ void outputForLab5(const std::filesystem::path& path) {
     }
 }
 
+void CheckArgumentsAmountLab6(int arguments_amount) {
+    try {
+        if (arguments_amount != 3) {
+            std::string errorMessage = "Invalid command line arguments amount: "
+                                       "current is " + std::to_string(arguments_amount) +
+                                       ", required is 2";
+            throw std::invalid_argument(errorMessage);
+        }
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
+}
+
 void CheckDirectoryPath(const std::filesystem::path& path_to_directory) {
     try {
         if (!exists(path_to_directory)) {
@@ -368,6 +381,22 @@ std::string ReadFileContent(const std::filesystem::path& path_to_file) {
     } catch (const std::exception& error) {
         std::cerr << error.what() << '\n';
     }
+    return {};
+}
+
+std::set<std::string> GetFilesContentFromDirectory(const std::filesystem::path& path_to_directory) {
+    try {
+        std::set<std::string> result;
+        for (const auto& entry: std::filesystem::directory_iterator(path_to_directory)) {
+            if (is_regular_file(entry.path())) {
+                result.insert(ReadFileContent(entry.path()));
+            }
+        }
+        return result;
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+    }
+    return {};
 }
 
 std::size_t filesystem_object::Size(const std::filesystem::path& path_to_filesystem_object) {
