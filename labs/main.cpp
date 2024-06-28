@@ -17,7 +17,13 @@ int main(int argc, char* argv[]) {
         CheckDirectoryPath(directory);
         for (const auto& entry : std::filesystem::directory_iterator(directory)) {
             if (is_regular_file(entry.path())) {
-                Move(entry.path());
+                FileName file(entry.path());
+                file.Parse();
+                if (file.IsRemoveRequired()) {
+                    std::filesystem::remove(file.path_to_current_file);
+                } else {
+                    Move(entry.path());
+                }
             }
         }
         return 0;
