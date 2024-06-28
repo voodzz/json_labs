@@ -8,6 +8,7 @@
 #include <vector>
 #include <ctime>
 #include <set>
+#include "FileName.h"
 
 void CheckArgumentsAmount(int arguments_amount);
 void CheckInputPathLabs1And2(const std::filesystem::path& path_to_filesystem_object);
@@ -201,5 +202,6 @@ void RemoveDuplicatesFromDirectory (const std::filesystem::path& path_to_directo
 
 std::filesystem::path GetPathToMove (const std::filesystem::path& path_to_file);
 void Move(const std::filesystem::path& path_to_file);
+std::filesystem::path GetPathToMoveLab10 (const std::filesystem::path& path_to_file);
 
 #endif //LABS_LAB_H

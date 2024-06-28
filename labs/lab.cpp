@@ -8,6 +8,7 @@
 #include <regex>
 #include "lab.h"
 #include "readAndParse.h"
+#include "FileName.h"
 
 void CheckArgumentsAmount(int arguments_amount) {
     try {
@@ -528,6 +529,23 @@ void Move(const std::filesystem::path& path_to_file) {
     }
 
     std::filesystem::rename(path_to_file, destination);
+    std::string message = "File by path " + path_to_file.string() + " has been moved to " + destination.string();
+    std::cout << message << '\n';
+}
+
+std::filesystem::path GetPathToMoveLab10(const std::filesystem::path& path_to_file) {
+    try {
+        std::filesystem::path newPath = path_to_file.parent_path();
+        FileName file(path_to_file);
+        std::string year_str = std::to_string(file.year);
+        std::string month_str = std::to_string(file.month);
+        std::string day_str = std::to_string(file.day);
+        newPath.append(year_str).append(month_str).append(day_str).append(file.only_name);
+        return newPath;
+    } catch (const std::exception& error) {
+        std::cerr << error.what() << '\n';
+        return {};
+    }
 }
 
 std::size_t filesystem_object::Size(const std::filesystem::path& path_to_filesystem_object) {
