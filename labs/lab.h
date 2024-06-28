@@ -176,14 +176,14 @@ namespace directory_content {
         ~Info() = default;
 
         friend std::ostream& operator <<(std::ostream& os, const Info& obj) {
-            os << std::left << std::setw(20) << std::setfill(' ') << "path_to_directory:"
-               << std::left << std::setw(50) << std::setfill(' ') << obj.path_to_directory
-               << std::left << std::setw(20) << std::setfill(' ') << "size:"
-               << std::left << std::setw(50) << std::setfill(' ') << obj.size
-               << std::left << std::setw(20) << std::setfill(' ') << "files_amount:"
-               << std::left << std::setw(50) << std::setfill(' ') << obj.files_amount
-               << std::left << std::setw(20) << std::setfill(' ') << "directories_amount:"
-               << std::left << std::setw(50) << std::setfill(' ') << obj.directories_amount;
+            os << std::left << std::setw(50) << std::setfill(' ') << "path_to_directory:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.path_to_directory
+               << std::left << std::setw(50) << std::setfill(' ') << "size:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.size
+               << std::left << std::setw(50) << std::setfill(' ') << "files_amount:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.files_amount
+               << std::left << std::setw(50) << std::setfill(' ') << "directories_amount:"
+               << std::left << std::setw(20) << std::setfill(' ') << obj.directories_amount;
             return os;
         }
     };

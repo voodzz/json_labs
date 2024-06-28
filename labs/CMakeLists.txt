@@ -23,6 +23,8 @@ add_executable(labs
         FilesStorage.cpp
         FileName.cpp
         FileName.h
+        Mains.h
+        Mains.cpp
         #tests_for_labs/test.cc
 )
 

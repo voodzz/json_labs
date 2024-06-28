@@ -97,8 +97,6 @@ spdlog
 # CLion files
 cmake-build-debug
 .idea/*
-*.txt
-!CMakeLists.txt
 *.exe
 
 # Chutzpah Test files
